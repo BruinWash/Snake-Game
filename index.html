@@ -94,6 +94,9 @@
                         data-page="game">Play</button>
                     <button
                         class="nav-btn bg-transparent border-2 border-white/20 text-white px-6 py-2 rounded-full cursor-pointer transition-all duration-300 font-medium text-sm hover:bg-white/20 hover:border-white/40 hover:-translate-y-0.5"
+                        data-page="leaderboard">Leaderboard</button>
+                    <button
+                        class="nav-btn bg-transparent border-2 border-white/20 text-white px-6 py-2 rounded-full cursor-pointer transition-all duration-300 font-medium text-sm hover:bg-white/20 hover:border-white/40 hover:-translate-y-0.5"
                         data-page="about">About</button>
                 </div>
 
@@ -134,6 +137,11 @@
                 </button>
                 <button
                     class="mobile-nav-btn bg-transparent border-2 border-white/20 text-white px-6 py-4 rounded-2xl cursor-pointer transition-all duration-300 font-medium text-base text-left w-full hover:bg-white/20 hover:border-white/40 hover:translate-x-1"
+                    data-page="leaderboard">
+                    <i class="ri-trophy-line"></i> Leaderboard
+                </button>
+                <button
+                    class="mobile-nav-btn bg-transparent border-2 border-white/20 text-white px-6 py-4 rounded-2xl cursor-pointer transition-all duration-300 font-medium text-base text-left w-full hover:bg-white/20 hover:border-white/40 hover:translate-x-1"
                     data-page="about">
                     <i class="ri-user-line"></i> About Developer
                 </button>
@@ -170,13 +178,13 @@
                             class="w-[30px] h-[30px] rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.2)] bg-gradient-to-br from-[#f59e0b] to-[#d97706] border-[3px] border-white">
                         </div>
                         <div
-                            class="w-[30px] h-[30px] rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.2)] bg-gradient-to-br from-[#10b981] to-[#059669]">
+                            class="w-[30px] h-[30px] rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.2)] bg-gradient-to-br from-[#3B82F6] to-[#1D4ED8]">
                         </div>
                         <div
-                            class="w-[30px] h-[30px] rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.2)] bg-gradient-to-br from-[#10b981] to-[#059669]">
+                            class="w-[30px] h-[30px] rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.2)] bg-gradient-to-br from-[#3B82F6] to-[#1D4ED8]">
                         </div>
                         <div
-                            class="w-[30px] h-[30px] rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.2)] bg-gradient-to-br from-[#10b981] to-[#059669]">
+                            class="w-[30px] h-[30px] rounded-lg shadow-[0_4px_8px_rgba(0,0,0,0.2)] bg-gradient-to-br from-[#3B82F6] to-[#1D4ED8]">
                         </div>
                     </div>
                     <div
@@ -281,6 +289,32 @@
             </div>
         </main>
 
+        <!-- Leaderboard Page -->
+        <main class="hidden flex-1 p-8 flex items-center justify-center" id="leaderboardPage">
+            <div class="max-w-[800px] w-full">
+                <div class="text-center mb-8">
+                    <h2 class="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-[#e0e7ff] bg-clip-text text-transparent">
+                        <i class="ri-trophy-line"></i> Top Scores
+                    </h2>
+                    <p class="opacity-90">Check out the highest scores achieved!</p>
+                </div>
+
+                <div class="bg-white/10 backdrop-blur-[10px] rounded-[20px] p-6 border border-white/20">
+                    <div id="leaderboardList" class="space-y-2">
+                        <div class="text-center py-8 opacity-70">
+                            <p>No scores yet. Play the game to appear on the leaderboard!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button
+                    class="bg-gradient-to-r from-[#10b981] to-[#059669] border-none text-white px-8 py-4 rounded-full text-lg font-semibold cursor-pointer transition-all duration-300 flex items-center gap-2 shadow-[0_4px_15px_rgba(16,185,129,0.3)] hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(16,185,129,0.4)] mx-auto mt-8"
+                    id="playFromLeaderboardBtn">
+                    <i class="ri-play-fill"></i> Play Game
+                </button>
+            </div>
+        </main>
+
         <!-- Game Page -->
         <main class="hidden flex-1 p-4 sm:p-8 flex items-center justify-center" id="gamePage">
             <div class="max-w-[1000px] w-full">
@@ -325,6 +359,32 @@
                             </button>
                         </div>
                     </div>
+
+                    <!-- Player Name Modal -->
+                    <div id="playerNameModal"
+                        class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/90 backdrop-blur-[20px] rounded-[20px] p-8 text-center border-2 border-white/20 w-[85%] sm:w-[50%] md:w-[40%] lg:w-[35%]">
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-semibold mb-4 text-[#10b981]">🎉 New High Score!</h2>
+                            <p class="text-base sm:text-lg mb-6 opacity-90">Enter your name to save your score:</p>
+                            <input 
+                                id="playerNameInput" 
+                                type="text" 
+                                placeholder="Your Name" 
+                                maxlength="20"
+                                class="w-full px-4 py-3 rounded-lg text-[#333] font-medium text-center mb-4 border-2 border-white/30 focus:outline-none focus:border-[#10b981] bg-white"
+                            />
+                            <div class="flex gap-3 flex-col sm:flex-row">
+                                <button id="submitNameButton"
+                                    class="flex-1 bg-gradient-to-r from-[#10b981] to-[#059669] border-none text-white px-4 py-3 rounded-full font-semibold cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_6px_20px_rgba(16,185,129,0.4)]">
+                                    Save Score
+                                </button>
+                                <button id="skipNameButton"
+                                    class="flex-1 bg-transparent border-2 border-white/30 text-white px-4 py-3 rounded-full font-semibold cursor-pointer transition-all duration-300 hover:bg-white/10">
+                                    Skip
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="text-center">
@@ -366,13 +426,19 @@
             score: 0,
             highScore: localStorage.getItem('snakeHighScore') || 0,
             speed: 150,
-            level: 1
+            level: 1,
+            isNewHighScore: false,
+            lastPlayerName: ''
         };
+
+        // Leaderboard state
+        let leaderboard = JSON.parse(localStorage.getItem('snakeLeaderboard')) || [];
 
         // DOM elements
         const homePage = document.getElementById('homePage');
         const aboutPage = document.getElementById('aboutPage');
         const gamePage = document.getElementById('gamePage');
+        const leaderboardPage = document.getElementById('leaderboardPage');
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
         const scoreElement = document.getElementById('score');
@@ -380,13 +446,19 @@
         const gameOverScreen = document.getElementById('gameOverScreen');
         const finalScoreElement = document.getElementById('finalScore');
         const newRecordElement = document.getElementById('newRecord');
+        const playerNameModal = document.getElementById('playerNameModal');
+        const playerNameInput = document.getElementById('playerNameInput');
+        const submitNameButton = document.getElementById('submitNameButton');
+        const skipNameButton = document.getElementById('skipNameButton');
+        const leaderboardList = document.getElementById('leaderboardList');
+        const restartBtn = document.getElementById('restartButton');
+        const playFromLeaderboardBtn = document.getElementById('playFromLeaderboardBtn');
 
         // Navigation
         const navBtns = document.querySelectorAll('.nav-btn');
         const mobileNavBtns = document.querySelectorAll('.mobile-nav-btn');
         const startGameBtn = document.getElementById('startGameBtn');
         const backToHomeBtn = document.getElementById('backToHome');
-        const restartBtn = document.getElementById('restartButton');
         const pauseBtn = document.getElementById('pauseBtn');
 
         // Mobile Menu
@@ -418,8 +490,8 @@
         // Colors
         const COLORS = {
             background: '#1a1a2e',
-            snakeHead: '#0000FF',
-            snakeBody: '#10b981',
+            snakeHead: '#f59e0b',
+            snakeBody: '#3B82F6',
             food: '#ef4444',
             border: '#4f46e5'
         };
@@ -474,7 +546,7 @@
                 ctx.fillRect(segment.x, segment.y, GRID_SIZE, GRID_SIZE);
 
                 // Border
-                ctx.strokeStyle = isHead ? '#fff' : '#065f46';
+                ctx.strokeStyle = isHead ? '#fff' : '#1E40AF';
                 ctx.lineWidth = 2;
                 ctx.strokeRect(segment.x, segment.y, GRID_SIZE, GRID_SIZE);
 
@@ -665,15 +737,22 @@
             // Check for new high score
             if (gameState.score > gameState.highScore) {
                 gameState.highScore = gameState.score;
+                gameState.isNewHighScore = true;
                 localStorage.setItem('snakeHighScore', gameState.highScore);
-                newRecordElement.classList.remove('hidden');
                 updateHighScore();
+                
+                // Show player name modal
+                playerNameInput.value = gameState.lastPlayerName || '';
+                playerNameInput.focus();
+                playerNameModal.classList.remove('hidden');
+                gameOverScreen.classList.add('hidden');
             } else {
+                gameState.isNewHighScore = false;
+                finalScoreElement.textContent = `Your Score: ${gameState.score}`;
+                gameOverScreen.classList.remove('hidden');
+                playerNameModal.classList.add('hidden');
                 newRecordElement.classList.add('hidden');
             }
-
-            finalScoreElement.textContent = `Your Score: ${gameState.score}`;
-            gameOverScreen.classList.remove('hidden');
         }
 
         // Update score display
@@ -686,11 +765,67 @@
             highScoreElement.textContent = `Best: ${gameState.highScore}`;
         }
 
+        // Leaderboard functions
+        function saveScoreToLeaderboard(playerName) {
+            const entry = {
+                name: playerName || 'Anonymous',
+                score: gameState.score,
+                date: new Date().toLocaleDateString()
+            };
+
+            leaderboard.push(entry);
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 10); // Keep top 10
+
+            localStorage.setItem('snakeLeaderboard', JSON.stringify(leaderboard));
+            gameState.lastPlayerName = playerName;
+        }
+
+        function displayLeaderboard() {
+            if (leaderboard.length === 0) {
+                leaderboardList.innerHTML = '<div class="text-center py-8 opacity-70"><p>No scores yet. Play the game to appear on the leaderboard!</p></div>';
+                return;
+            }
+
+            leaderboardList.innerHTML = leaderboard.map((entry, index) => {
+                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index + 1}.`;
+                return `
+                    <div class="flex justify-between items-center p-4 bg-white/5 rounded-lg hover:bg-white/10 transition-all duration-300 border border-white/10">
+                        <div class="flex items-center gap-4 flex-1">
+                            <span class="text-xl font-bold text-[#f59e0b] min-w-[40px]">${medal}</span>
+                            <div>
+                                <p class="font-semibold text-white">${entry.name}</p>
+                                <p class="text-xs opacity-60">${entry.date}</p>
+                            </div>
+                        </div>
+                        <span class="text-xl font-bold text-[#10b981]">${entry.score}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function showLeaderboardPage() {
+            homePage.classList.add('hidden');
+            aboutPage.classList.add('hidden');
+            gamePage.classList.add('hidden');
+            leaderboardPage.classList.remove('hidden');
+            updateActiveNavigation('leaderboard');
+            closeMobileMenu();
+            displayLeaderboard();
+
+            // Stop game if running
+            if (gameState.isRunning) {
+                gameState.isRunning = false;
+                clearInterval(gameLoop);
+            }
+        }
+
         // Navigation functions
         function showHomePage() {
             homePage.classList.remove('hidden');
             aboutPage.classList.add('hidden');
             gamePage.classList.add('hidden');
+            leaderboardPage.classList.add('hidden');
             updateActiveNavigation('home');
             closeMobileMenu();
 
@@ -705,6 +840,7 @@
             homePage.classList.add('hidden');
             aboutPage.classList.remove('hidden');
             gamePage.classList.add('hidden');
+            leaderboardPage.classList.add('hidden');
             updateActiveNavigation('about');
             closeMobileMenu();
 
@@ -719,9 +855,11 @@
             homePage.classList.add('hidden');
             aboutPage.classList.add('hidden');
             gamePage.classList.remove('hidden');
+            leaderboardPage.classList.add('hidden');
             updateActiveNavigation('game');
             closeMobileMenu();
             gameOverScreen.classList.add('hidden');
+            playerNameModal.classList.add('hidden');
 
             // Initialize and start game
             startGame();
@@ -761,6 +899,8 @@
                     showHomePage();
                 } else if (page === 'game') {
                     showGamePage();
+                } else if (page === 'leaderboard') {
+                    showLeaderboardPage();
                 } else if (page === 'about') {
                     showAboutPage();
                 }
@@ -775,6 +915,8 @@
                     showHomePage();
                 } else if (page === 'game') {
                     showGamePage();
+                } else if (page === 'leaderboard') {
+                    showLeaderboardPage();
                 } else if (page === 'about') {
                     showAboutPage();
                 }
@@ -799,8 +941,35 @@
         pauseBtn.addEventListener('click', togglePause);
         restartBtn.addEventListener('click', () => {
             gameOverScreen.classList.add('hidden');
+            playerNameModal.classList.add('hidden');
             startGame();
         });
+
+        // Player name modal event listeners
+        submitNameButton.addEventListener('click', () => {
+            const playerName = playerNameInput.value.trim() || 'Anonymous';
+            gameState.lastPlayerName = playerName;
+            saveScoreToLeaderboard(playerName);
+            playerNameModal.classList.add('hidden');
+            finalScoreElement.textContent = `Your Score: ${gameState.score}`;
+            gameOverScreen.classList.remove('hidden');
+        });
+
+        skipNameButton.addEventListener('click', () => {
+            playerNameModal.classList.add('hidden');
+            finalScoreElement.textContent = `Your Score: ${gameState.score}`;
+            gameOverScreen.classList.remove('hidden');
+        });
+
+        // Allow enter key to submit name
+        playerNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitNameButton.click();
+            }
+        });
+
+        // Leaderboard navigation button
+        playFromLeaderboardBtn.addEventListener('click', showGamePage);
 
         // Enhanced touch/click controls for mobile
         document.querySelectorAll('.control-btn').forEach(btn => {
@@ -886,6 +1055,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             showHomePage();
             resizeCanvas();
+            displayLeaderboard();
+            updateHighScore();
         });
     </script>
 </body>
